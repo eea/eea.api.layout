@@ -16,9 +16,7 @@ The eea.api.layout is a Plone add-on
 Main features
 =============
 
-1. Easy to install/uninstall via Site Setup > Add-ons
-2.
-3.
+1. Dexterity Content-Types **@layout** endpoint
 
 Install
 =======
