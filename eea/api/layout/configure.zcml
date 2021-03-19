@@ -7,6 +7,7 @@
 
   <include file="profiles.zcml" />
   <include package=".browser" />
+  <include package=".layout" />
   <include package=".upgrades" />
 
 </configure>
