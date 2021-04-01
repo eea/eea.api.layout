@@ -1,0 +1,14 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:i18n="http://namespaces.zope.org/i18n"
+  xmlns:plone="http://namespaces.plone.org/plone"
+  i18n_domain="eea">
+
+  <plone:behavior
+    name="volto.blocks.layout"
+    title="Blocks with fixed Layout"
+    description="Blocks with fixed auto-update layout"
+    provides="eea.api.layout.interfaces.ILayoutBlocks"
+    />
+
+</configure>
