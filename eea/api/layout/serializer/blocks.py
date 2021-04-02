@@ -27,7 +27,8 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
             IFixedLayoutBlockSerializationSync,
             name=layout.get("@type", ""),
             default=queryMultiAdapter(
-                (self.context, self.request), IFixedLayoutBlockSerializationSync
+                (self.context, self.request),
+                IFixedLayoutBlockSerializationSync
             ),
         )
 
@@ -36,15 +37,18 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
 
         # Sync sub-blocks
         if "blocks" in layout and "blocks" in block:
-            if(isinstance(layout['blocks'], dict) and
+            if (isinstance(layout['blocks'], dict) and
                isinstance(block["blocks"], dict)):
-                value["blocks"] = self.blocks(layout["blocks"], block["blocks"])
+                value["blocks"] = self.blocks(
+                    layout["blocks"],
+                    block["blocks"]
+                )
 
         if "data" in layout and "data" in block:
             if (isinstance(layout["data"], dict) and
-                isinstance(block["data"], dict)):
+               isinstance(block["data"], dict)):
                 if ("blocks" in layout["data"] and
-                    "blocks" in block["data"]):
+                   "blocks" in block["data"]):
                     value["data"]["blocks"] = self.blocks(
                         layout["data"]["blocks"], block["data"]["blocks"]
                     )
