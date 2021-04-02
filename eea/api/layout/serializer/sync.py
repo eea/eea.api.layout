@@ -51,6 +51,7 @@ class ExtendedFixedLayoutSync(DefaultFixedLayoutSync):
         "maxChars": True,
         "readOnlySettings": ["title", "as"],
         "disableInnerButtons": True,
+        "fixedLayout": True,
     }
 
     def __call__(self, layout, block):

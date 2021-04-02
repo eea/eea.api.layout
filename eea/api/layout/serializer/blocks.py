@@ -43,15 +43,39 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
                     layout["blocks"],
                     block["blocks"]
                 )
+                # Sub-block has a fixed layout
+                if (
+                    layout.get('fixedLayout') and
+                    "blocks_layout" in layout and
+                    "blocks_layout" in block
+                ):
+                    value["blocks_layout"] = self.blocks_layout(
+                        layout["blocks_layout"],
+                        block["blocks_layout"],
+                        block["blocks"]
+                    )
 
         if "data" in layout and "data" in block:
             if (isinstance(layout["data"], dict) and
                isinstance(block["data"], dict)):
-                if ("blocks" in layout["data"] and
-                   "blocks" in block["data"]):
+                if (
+                    "blocks" in layout["data"] and
+                    "blocks" in block["data"]
+                ):
                     value["data"]["blocks"] = self.blocks(
                         layout["data"]["blocks"], block["data"]["blocks"]
                     )
+                    # Sub-block has a fixed layout
+                    if (
+                        layout.get('fixedLayout') and
+                        "blocks_layout" in layout['data'] and
+                        "blocks_layout" in block['data']
+                    ):
+                        value["data"]["blocks_layout"] = self.blocks_layout(
+                            layout['data']["blocks_layout"],
+                            block['data']["blocks_layout"],
+                            block['data']["blocks"]
+                        )
 
         return value
 
