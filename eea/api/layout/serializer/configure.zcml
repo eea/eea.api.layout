@@ -1,0 +1,12 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  i18n_domain="eea">
+
+  <adapter factory=".blocks.FixedLayoutBlocksJSONFieldSerializer" />
+  
+  <adapter factory=".sync.DefaultFixedLayoutSync" />
+  <adapter factory=".sync.ExtendedFixedLayoutSync" name="group" />
+  <adapter factory=".sync.ExtendedFixedLayoutSync" name="columnsBlock" />
+  <adapter factory=".sync.ExtendedFixedLayoutSync" name="accordion" />
+
+</configure>
