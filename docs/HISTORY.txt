@@ -3,6 +3,8 @@ Changelog
 
 1.1-dev0 - (unreleased)
 ---------------------------
+* Feature: Add "volto.blocks.fixed.layout" behavior with auto-sync support
+  [avoinea]
 
 1.0 - (2021-03-19)
 ------------------

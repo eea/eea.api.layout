@@ -1,0 +1,16 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:i18n="http://namespaces.zope.org/i18n"
+  xmlns:plone="http://namespaces.plone.org/plone"
+  i18n_domain="eea">
+
+  <include package="plone.behavior" file="meta.zcml"/>
+
+  <plone:behavior
+    name="volto.blocks.fixed.layout"
+    title="Blocks with fixed Layout"
+    description="Blocks with fixed layout, auto-update"
+    provides="eea.api.layout.interfaces.IFixedLayoutBlocks"
+    />
+
+</configure>
