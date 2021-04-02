@@ -1,6 +1,9 @@
 Changelog
 =========
 
+2.1-dev0 - (unreleased)
+---------------------------
+
 2.0 - (2021-04-02)
 ---------------------------
 * Feature: Add "volto.blocks.fixed.layout" behavior with auto-sync support
