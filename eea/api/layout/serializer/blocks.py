@@ -1,41 +1,82 @@
 """ Layout Blocks serializer
 """
+import copy
 from zope.interface import implementer
 from zope.interface import Interface
-from zope.component import adapter
+from zope.component import adapter, queryMultiAdapter
 from plone.schema import IJSONField
 from plone.restapi.interfaces import IFieldSerializer
 from plone.restapi.serializer.blocks import BlocksJSONFieldSerializer
-from eea.api.layout.interfaces import ILayoutBlocks
-import copy
+from eea.api.layout.interfaces import IFixedLayoutBlocks
+from eea.api.layout.interfaces import IFixedLayoutBlockSerializationSync
 
 
-@adapter(IJSONField, ILayoutBlocks, Interface)
+@adapter(IJSONField, IFixedLayoutBlocks, Interface)
 @implementer(IFieldSerializer)
-class LayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
-    """ Blocks with layout serializer
-    """
-    def get_uid_data(self, layout, blocks, default=None):
-        for uid, block in blocks.items():
-            if block.get("@layout") == layout:
-                return uid, block.get("data", default)
-        return layout, default
+class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
+    """Blocks with layout serializer"""
 
-    def blocks(self, blocks):
+    def sync_layout(self, layout, block):
+        """Sync layout with block items"""
+        value = copy.deepcopy(layout)
+        if layout.get("readOnly"):
+            return value
+
+        handler = queryMultiAdapter(
+            (self.context, self.request),
+            IFixedLayoutBlockSerializationSync,
+            name=layout.get("@type", ""),
+            default=queryMultiAdapter(
+                (self.context, self.request), IFixedLayoutBlockSerializationSync
+            ),
+        )
+
+        if handler:
+            value = handler(value, block)
+
+        # Sync sub-blocks
+        if "blocks" in layout and "blocks" in block:
+            if(isinstance(layout['blocks'], dict) and
+               isinstance(block["blocks"], dict)):
+                value["blocks"] = self.blocks(layout["blocks"], block["blocks"])
+
+        if "data" in layout and "data" in block:
+            if (isinstance(layout["data"], dict) and
+                isinstance(block["data"], dict)):
+                if ("blocks" in layout["data"] and
+                    "blocks" in block["data"]):
+                    value["data"]["blocks"] = self.blocks(
+                        layout["data"]["blocks"], block["data"]["blocks"]
+                    )
+
+        return value
+
+    def get_uid(self, layout_id, blocks):
+        """Get layout new uid"""
+        for uid, block in blocks.items():
+            if uid == layout_id:
+                return uid
+            if block.get("@layout") == layout_id:
+                return uid
+        return layout_id
+
+    def get_uid_block(self, layout_id, layout, blocks):
+        """Get UID and Block data"""
+        for uid, block in blocks.items():
+            if uid == layout_id:
+                return uid, self.sync_layout(layout, block)
+            if block.get("@layout") == layout_id:
+                return uid, self.sync_layout(layout, block)
+        return layout_id, layout
+
+    def blocks(self, layout, blocks):
+        """Get blocks"""
         res = {}
-        default = copy.deepcopy(self.field.default)
 
         # Render layout with real data
-        for layout, block in default.items():
-            uid, data = self.get_uid_data(layout, blocks, block.get('data'))
+        for layout_id, layout_block in layout.items():
+            uid, block = self.get_uid_block(layout_id, layout_block, blocks)
             res[uid] = block
-            res[uid]['@layout'] = layout
-
-            if block.get('readOnly'):
-                continue
-
-            if 'data' in block:
-                res[uid]['data'] = data
 
         # Render blocks that are not in layout
         for uid, block in blocks.items():
@@ -44,16 +85,33 @@ class LayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
 
         return res
 
-    def blocks_layout(self, blocks_layout):
-        return blocks_layout
+    def blocks_layout(self, layout, value, blocks):
+        """Get blocks layout"""
+        items = layout.get("items", [])
+        if not items:
+            return value
+
+        if not blocks:
+            return value
+
+        res = []
+        for layout_id in items:
+            uid = self.get_uid(layout_id, blocks)
+            res.append(uid)
+        return {"items": res}
 
     def __call__(self):
-        value = super(LayoutBlocksJSONFieldSerializer, self).__call__()
+        value = super(FixedLayoutBlocksJSONFieldSerializer, self).__call__()
         if not self.field.default:
             return value
 
-        if self.field.getName() == "blocks":
-            return self.blocks(value)
+        layout = copy.deepcopy(self.field.default)
 
-        if self.field.getName() == 'blocks_layout':
-            return self.blocks_layout(value)
+        if self.field.getName() == "blocks":
+            return self.blocks(layout, value)
+
+        if self.field.getName() == "blocks_layout":
+            blocks = getattr(self.context, "blocks")
+            return self.blocks_layout(layout, value, blocks)
+
+        return value

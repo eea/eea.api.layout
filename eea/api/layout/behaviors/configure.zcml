@@ -5,10 +5,10 @@
   i18n_domain="eea">
 
   <plone:behavior
-    name="volto.blocks.layout"
+    name="volto.blocks.fixed.layout"
     title="Blocks with fixed Layout"
-    description="Blocks with fixed auto-update layout"
-    provides="eea.api.layout.interfaces.ILayoutBlocks"
+    description="Blocks with fixed layout, auto-update"
+    provides="eea.api.layout.interfaces.IFixedLayoutBlocks"
     />
 
 </configure>

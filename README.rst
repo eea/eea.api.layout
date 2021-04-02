@@ -17,6 +17,7 @@ Main features
 =============
 
 1. Dexterity Content-Types **@layout** endpoint
+2. **volto.blocks.fixed.layout** behavior with auto-sync support
 
 Install
 =======
@@ -98,4 +99,3 @@ Funding
 EEA_ - European Environment Agency (EU)
 
 .. _EEA: https://www.eea.europa.eu/
-.. _`EEA Web Systems Training`: http://www.youtube.com/user/eeacms/videos?view=1
