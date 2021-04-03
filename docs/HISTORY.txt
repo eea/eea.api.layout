@@ -3,6 +3,8 @@ Changelog
 
 2.1-dev0 - (unreleased)
 ---------------------------
+* Internal: Add doctests for fixed layout sync multi-adapter IFixedLayoutBlockSerializationSync
+  [avoinea]
 
 2.0 - (2021-04-02)
 ---------------------------
@@ -11,6 +13,5 @@ Changelog
 
 1.0 - (2021-03-19)
 ------------------
-
 * Blocks **@layout** endpoint
   [avoinea]

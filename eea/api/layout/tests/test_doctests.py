@@ -21,6 +21,12 @@ def test_suite():
                 optionflags=OPTIONFLAGS,
                 package='eea.api.layout'),
             layer=FUNCTIONAL_TESTING),
+        layered(
+            doctest.DocFileSuite(
+                'sync.rst',
+                optionflags=OPTIONFLAGS,
+                package='eea.api.layout.serializer'),
+            layer=FUNCTIONAL_TESTING),
     ])
 
     return suite
