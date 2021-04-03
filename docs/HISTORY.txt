@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1-dev0 - (unreleased)
+2.1 - (2021-04-03)
 ---------------------------
 * Internal: Add doctests for fixed layout sync multi-adapter IFixedLayoutBlockSerializationSync
   [avoinea]
