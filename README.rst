@@ -19,6 +19,11 @@ Main features
 1. Dexterity Content-Types **@layout** endpoint
 2. **volto.blocks.fixed.layout** behavior with auto-sync support
 
+Documentation
+=============
+
+* `Fixed Layout Block Synchronizer <https://github.com/eea/eea.api.layout/blob/develop/eea/api/layout/serializer/sync.rst>`_
+
 Install
 =======
 
