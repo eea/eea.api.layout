@@ -16,6 +16,36 @@ from eea.api.layout.interfaces import IFixedLayoutBlockSerializationSync
 class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
     """Blocks with layout serializer"""
 
+    def has_blocks(self, layout, block):
+        """ Has blocks
+        """
+        if "blocks" not in layout:
+            return False
+        if "blocks" not in block:
+            return False
+        if not isinstance(layout["blocks"], dict):
+            return False
+        if not isinstance(block["blocks"], dict):
+            return False
+        return True
+
+    def has_data_blocks(self, layout, block):
+        """ Has data with blocks
+        """
+        if 'data' not in layout:
+            return False
+        if 'data' not in block:
+            return False
+        if not isinstance(layout["data"], dict):
+            return False
+        if not isinstance(block["data"], dict):
+            return False
+        if "blocks" not in layout["data"]:
+            return False
+        if "blocks" not in block["data"]:
+            return False
+        return True
+
     def sync_layout(self, layout, block):
         """Sync layout with block items"""
         value = copy.deepcopy(layout)
@@ -36,46 +66,41 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
             value = handler(value, block)
 
         # Sync sub-blocks
-        if "blocks" in layout and "blocks" in block:
-            if (isinstance(layout['blocks'], dict) and
-               isinstance(block["blocks"], dict)):
-                value["blocks"] = self.blocks(
-                    layout["blocks"],
+        if self.has_blocks(layout, block):
+            value["blocks"] = self.blocks(
+                layout["blocks"],
+                block["blocks"],
+                readOnlySettings=layout.get("readOnlySettings", None),
+            )
+            # Sub-block has a fixed layout
+            if (
+                layout.get("fixedLayout") and
+                "blocks_layout" in layout and
+                "blocks_layout" in block
+            ):
+                value["blocks_layout"] = self.blocks_layout(
+                    layout["blocks_layout"],
+                    block["blocks_layout"],
                     block["blocks"]
                 )
-                # Sub-block has a fixed layout
-                if (
-                    layout.get('fixedLayout') and
-                    "blocks_layout" in layout and
-                    "blocks_layout" in block
-                ):
-                    value["blocks_layout"] = self.blocks_layout(
-                        layout["blocks_layout"],
-                        block["blocks_layout"],
-                        block["blocks"]
-                    )
 
-        if "data" in layout and "data" in block:
-            if (isinstance(layout["data"], dict) and
-               isinstance(block["data"], dict)):
-                if (
-                    "blocks" in layout["data"] and
-                    "blocks" in block["data"]
-                ):
-                    value["data"]["blocks"] = self.blocks(
-                        layout["data"]["blocks"], block["data"]["blocks"]
-                    )
-                    # Sub-block has a fixed layout
-                    if (
-                        layout.get('fixedLayout') and
-                        "blocks_layout" in layout['data'] and
-                        "blocks_layout" in block['data']
-                    ):
-                        value["data"]["blocks_layout"] = self.blocks_layout(
-                            layout['data']["blocks_layout"],
-                            block['data']["blocks_layout"],
-                            block['data']["blocks"]
-                        )
+        if self.has_data_blocks(layout, block):
+            value["data"]["blocks"] = self.blocks(
+                layout["data"]["blocks"],
+                block["data"]["blocks"],
+                readOnlySettings=layout.get("readOnlySettings", None),
+            )
+            # Sub-block has a fixed layout
+            if (
+                layout.get("fixedLayout") and
+                "blocks_layout" in layout["data"] and
+                "blocks_layout" in block["data"]
+            ):
+                value["data"]["blocks_layout"] = self.blocks_layout(
+                    layout["data"]["blocks_layout"],
+                    block["data"]["blocks_layout"],
+                    block["data"]["blocks"],
+                )
 
         return value
 
@@ -97,7 +122,7 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
                 return uid, self.sync_layout(layout, block)
         return layout_id, layout
 
-    def blocks(self, layout, blocks):
+    def blocks(self, layout, blocks, readOnlySettings=None):
         """Get blocks"""
         res = {}
 
@@ -105,6 +130,8 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
         for layout_id, layout_block in layout.items():
             uid, block = self.get_uid_block(layout_id, layout_block, blocks)
             res[uid] = block
+            if readOnlySettings is not None:
+                res[uid]["readOnlySettings"] = readOnlySettings
 
         # Render blocks that are not in layout
         for uid, block in blocks.items():
