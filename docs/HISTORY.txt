@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.2-dev0 - (unreleased)
+2.2 - (2021-04-05)
 ---------------------------
 * Feature: Add support for accordionPanel block and propagate readOnlySettings to sub-blocks
   [avoinea]
