@@ -49,7 +49,15 @@ class ExtendedFixedLayoutSync(DefaultFixedLayoutSync):
         "instructions": True,
         "allowedBlocks": True,
         "maxChars": True,
-        "readOnlySettings": ["title", "as"],
+        "readOnlySettings": [
+            "as",
+            "title",
+            "title_size",
+            "right_arrows",
+            "collapsed",
+            "non_exclusive"
+        ],
+        "readOnlyTitles": True,
         "disableInnerButtons": True,
         "fixedLayout": True,
     }

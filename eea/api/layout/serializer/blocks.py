@@ -41,7 +41,8 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
                isinstance(block["blocks"], dict)):
                 value["blocks"] = self.blocks(
                     layout["blocks"],
-                    block["blocks"]
+                    block["blocks"],
+                    readOnlySettings=layout.get('readOnlySettings', None)
                 )
                 # Sub-block has a fixed layout
                 if (
@@ -63,7 +64,9 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
                     "blocks" in block["data"]
                 ):
                     value["data"]["blocks"] = self.blocks(
-                        layout["data"]["blocks"], block["data"]["blocks"]
+                        layout["data"]["blocks"],
+                        block["data"]["blocks"],
+                        readOnlySettings=layout.get('readOnlySettings', None)
                     )
                     # Sub-block has a fixed layout
                     if (
@@ -97,7 +100,7 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
                 return uid, self.sync_layout(layout, block)
         return layout_id, layout
 
-    def blocks(self, layout, blocks):
+    def blocks(self, layout, blocks, readOnlySettings=None):
         """Get blocks"""
         res = {}
 
@@ -105,6 +108,8 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
         for layout_id, layout_block in layout.items():
             uid, block = self.get_uid_block(layout_id, layout_block, blocks)
             res[uid] = block
+            if readOnlySettings is not None:
+                res[uid]['readOnlySettings'] = readOnlySettings
 
         # Render blocks that are not in layout
         for uid, block in blocks.items():
