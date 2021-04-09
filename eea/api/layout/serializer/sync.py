@@ -50,16 +50,21 @@ class ExtendedFixedLayoutSync(DefaultFixedLayoutSync):
         "allowedBlocks": True,
         "maxChars": True,
         "readOnlySettings": [
+            "align",
             "as",
-            "title",
-            "title_size",
-            "right_arrows",
             "collapsed",
-            "non_exclusive"
+            "id",
+            "non_exclusive",
+            "right_arrows",
+            "size"
+            "title_size",
+            "title",
         ],
         "readOnlyTitles": True,
         "disableInnerButtons": True,
         "fixedLayout": True,
+        "styles": True,
+
     }
 
     def __call__(self, layout, block):
