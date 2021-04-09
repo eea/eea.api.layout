@@ -3,6 +3,8 @@ Changelog
 
 2.3-dev0 - (unreleased)
 ---------------------------
+* Feature: Apply ExtendedFixedLayoutSync by default on all blocks
+  [avoinea]
 
 2.2 - (2021-04-05)
 ---------------------------
