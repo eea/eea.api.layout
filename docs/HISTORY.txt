@@ -1,8 +1,10 @@
 Changelog
 =========
 
-2.4-dev0 - (unreleased)
+3.0-dev0 - (unreleased)
 ---------------------------
+* Feature: Add "Dexterity Fixed Layout" Control Panel to be able to configure fixed layout block properties and read-only block properties
+  [avoinea]
 
 2.3 - (2021-04-09)
 ---------------------------

@@ -1,10 +1,12 @@
 """ Sync layout
 """
+from plone import api
 from zope.interface import implementer
 from zope.component import adapter
 from zope.publisher.interfaces.browser import IBrowserRequest
 from eea.api.layout.interfaces import IFixedLayoutBlockSerializationSync
 from eea.api.layout.interfaces import IFixedLayoutBlocks
+from eea.api.layout.interfaces import IFixedLayoutBlocksSettings
 
 
 @implementer(IFixedLayoutBlockSerializationSync)
@@ -12,72 +14,52 @@ from eea.api.layout.interfaces import IFixedLayoutBlocks
 class DefaultFixedLayoutSync(object):
     """Sync basic layout block properties"""
 
-    layout = {
-        "placeholder": True,
-        "required": True,
-        "fixed": True,
-        "disableNewBlocks": True,
-        "readOnly": True,
-    }
-
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self._layout = None
+        self._readOnlySettings = None
+
+    @property
+    def layout(self):
+        """ Layout fixed settings
+        """
+        if self._layout is None:
+            self._layout = api.portal.get_registry_record(
+                "layout",
+                interface=IFixedLayoutBlocksSettings,
+                default=[]
+            )
+        return self._layout
+
+    @property
+    def readOnlySettings(self):
+        """ Read-only settings
+        """
+        if self._readOnlySettings is None:
+            self._readOnlySettings = api.portal.get_registry_record(
+                "readOnlySettings",
+                interface=IFixedLayoutBlocksSettings,
+                default=[]
+            )
+        return self._readOnlySettings
 
     def __call__(self, layout, block):
         res = {}
 
-        # Get block properties from layout
+        readOnlySettings = layout.get("readOnlySettings")
         for key, value in layout.items():
-            if self.layout.get(key):
+            # Get block properties from layout
+            if key in self.layout:
+                res[key] = value
+
+            # Get readOnlySettings from layout if enabled
+            if readOnlySettings and (key in self.readOnlySettings):
                 res[key] = value
 
         # Get all the other block properties
         for key, value in block.items():
             if key not in res:
-                res[key] = value
-
-        return res
-
-
-@implementer(IFixedLayoutBlockSerializationSync)
-@adapter(IFixedLayoutBlocks, IBrowserRequest)
-class ExtendedFixedLayoutSync(DefaultFixedLayoutSync):
-    """Sync extended layout block properties"""
-
-    extended_layout = {
-        "instructions": True,
-        "allowedBlocks": True,
-        "maxChars": True,
-        "readOnlySettings": [
-            "align",
-            "as",
-            "collapsed",
-            "id",
-            "non_exclusive",
-            "right_arrows",
-            "size"
-            "title_size",
-            "title",
-        ],
-        "readOnlyTitles": True,
-        "disableInnerButtons": True,
-        "fixedLayout": True,
-        "styles": True,
-
-    }
-
-    def __call__(self, layout, block):
-        res = super(ExtendedFixedLayoutSync, self).__call__(layout, block)
-
-        # Get block properties from layout
-        readOnlySettings = layout.get("readOnlySettings")
-        for key, value in layout.items():
-            if self.extended_layout.get(key):
-                res[key] = value
-            if readOnlySettings and (
-                key in self.extended_layout.get("readOnlySettings")
-            ):
                 res[key] = value
 
         return res
