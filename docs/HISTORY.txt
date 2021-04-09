@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.3 - (2021-04-09)
+---------------------------
+* Feature: Apply ExtendedFixedLayoutSync by default on all blocks
+  [avoinea]
+
 2.2 - (2021-04-05)
 ---------------------------
 * Feature: Add support for accordionPanel block and propagate readOnlySettings to sub-blocks

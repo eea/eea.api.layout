@@ -32,7 +32,7 @@ Get sync adapter
 
     >>> sync = getMultiAdapter((sandbox, request), IFixedLayoutBlockSerializationSync)
     >>> sync
-    <eea.api.layout.serializer.sync.DefaultFixedLayoutSync object at ...>
+    <eea.api.layout.serializer.sync.ExtendedFixedLayoutSync object at ...>
 
 Layout block:
 
