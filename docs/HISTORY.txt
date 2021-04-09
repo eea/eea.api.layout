@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.0 - (2021-04-09)
+---------------------------
+* Feature: Add "Dexterity Fixed Layout" Control Panel to be able to configure fixed layout block properties and read-only block properties
+  [avoinea]
+
 2.3 - (2021-04-09)
 ---------------------------
 * Feature: Apply ExtendedFixedLayoutSync by default on all blocks

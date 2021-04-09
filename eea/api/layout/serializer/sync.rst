@@ -32,7 +32,7 @@ Get sync adapter
 
     >>> sync = getMultiAdapter((sandbox, request), IFixedLayoutBlockSerializationSync)
     >>> sync
-    <eea.api.layout.serializer.sync.ExtendedFixedLayoutSync object at ...>
+    <eea.api.layout.serializer.sync.DefaultFixedLayoutSync object at ...>
 
 Layout block:
 
@@ -41,7 +41,9 @@ Layout block:
     ...   "required": True,
     ...   "fixed": True,
     ...   "disableNewBlocks": True,
-    ...   "placeholder": "Add image"
+    ...   "placeholder": "Add image",
+    ...   "readOnlySettings": True,
+    ...   "title": "Foo bar"
     ... }
 
 Content block:
@@ -50,6 +52,7 @@ Content block:
     ...   "@layout": "5956e52d-60d7-474f-bca3-c7efe09dc858",
     ...   "@type": "image",
     ...   "alt": "Flower",
+    ...   "title": "Flower",
     ...   "disableNewBlocks": False,
     ...   "fixed": False,
     ...   "placeholder": "Add yout image here",
@@ -74,6 +77,8 @@ Synced block:
      'href': 'http://flowers.com',
      'openLinkInNewTab': True,
      'placeholder': 'Add image',
+     'readOnlySettings': True,
      'required': True,
      'size': 'm',
+     'title': 'Foo bar',
      'url': 'http://localhost:3000/api/flower.png'}

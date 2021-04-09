@@ -4,7 +4,7 @@
 
   <adapter factory=".blocks.FixedLayoutBlocksJSONFieldSerializer" />
   
-  <adapter factory=".sync.ExtendedFixedLayoutSync" />
+  <adapter factory=".sync.DefaultFixedLayoutSync" />
   <!-- adapter factory=".sync.CustomFixedLayoutSync" name="custom-block" /-->
 
 </configure>
