@@ -42,6 +42,7 @@ class IFixedLayoutBlocksSettings(Interface):
             "disableInnerButtons",
             "fixedLayout",
             "styles",
+            "fields",
         ]
     )
 
