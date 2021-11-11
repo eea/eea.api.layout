@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2-dev0 - (unreleased)
+3.2 - (2021-11-11)
 ---------------------------
 * Change: Fixed package classifiers and python_requires
   [avoinea refs #139888]
