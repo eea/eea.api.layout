@@ -3,7 +3,7 @@ pipeline {
 
   environment {
         GIT_NAME = "eea.api.layout"
-        SONARQUBE_TAGS = "www.eea.europa.eu"
+        SONARQUBE_TAGS = "www.eea.europa.eu,biodiversity.europa.eu,forest.eea.europa.eu,industry.eea.europa.eu"
     }
 
   stages {
