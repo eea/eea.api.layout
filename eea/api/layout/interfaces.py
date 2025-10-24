@@ -16,18 +16,16 @@ class IFixedLayoutBlocks(IBlocks):
 
 
 class IFixedLayoutBlockSerializationSync(Interface):
-    """ Sync block properties with Layout
-    """
+    """Sync block properties with Layout"""
 
 
 class IFixedLayoutBlocksSettings(Interface):
-    """ Sync block settings
-    """
+    """Sync block settings"""
+
     layout = schema.List(
-        title=_(u"Fixed properties"),
-        description=_(
-            u"This block properties will be always read from layout"),
-        value_type=schema.ASCIILine(title=_(u"Block property")),
+        title=_("Fixed properties"),
+        description=_("This block properties will be always read from layout"),
+        value_type=schema.ASCIILine(title=_("Block property")),
         default=[
             "placeholder",
             "required",
@@ -43,15 +41,16 @@ class IFixedLayoutBlocksSettings(Interface):
             "fixedLayout",
             "styles",
             "fields",
-        ]
+        ],
     )
 
     readOnlySettings = schema.List(
-        title=_(u"Read only properties"),
+        title=_("Read only properties"),
         description=_(
-            u"This block properties will be read from layout "
-            u"if readOnlySettings is enabled"),
-        value_type=schema.ASCIILine(title=_(u"Block property")),
+            "This block properties will be read from layout "
+            "if readOnlySettings is enabled"
+        ),
+        value_type=schema.ASCIILine(title=_("Block property")),
         default=[
             "align",
             "as",
@@ -59,8 +58,7 @@ class IFixedLayoutBlocksSettings(Interface):
             "id",
             "non_exclusive",
             "right_arrows",
-            "size"
-            "title_size",
+            "sizetitle_size",
             "title",
-        ]
+        ],
     )

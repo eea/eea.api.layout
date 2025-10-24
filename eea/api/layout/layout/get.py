@@ -1,5 +1,5 @@
-""" Layout
-"""
+"""Layout"""
+
 from plone.restapi.interfaces import IExpandableElement
 from plone.restapi.serializer.converters import json_compatible
 from plone.restapi.services import Service
@@ -13,15 +13,14 @@ from zope.interface import Interface
 @implementer(IExpandableElement)
 @adapter(Interface, Interface)
 class Layout(object):
-    """ Layout
-    """
+    """Layout"""
+
     def __init__(self, context, request):
         self.context = context
         self.request = request
 
     def __call__(self, expand=False):
-        result = {"layout": {"@id": "{}/@layout".format(
-            self.context.absolute_url())}}
+        result = {"layout": {"@id": "{}/@layout".format(self.context.absolute_url())}}
         if not expand:
             return result
 
@@ -37,8 +36,7 @@ class Layout(object):
         schema = fti.lookupSchema()
         for field in schema:
             if field.endswith("blocks") or field.endswith("blocks_layout"):
-                result["layout"][field] = json_compatible(
-                    schema[field].default)
+                result["layout"][field] = json_compatible(schema[field].default)
         return result
 
 
@@ -46,7 +44,6 @@ class LayoutGet(Service):
     """Get layout information"""
 
     def reply(self):
-        """ Reply
-        """
+        """Reply"""
         info = Layout(self.context, self.request)
         return info(expand=True)["layout"]

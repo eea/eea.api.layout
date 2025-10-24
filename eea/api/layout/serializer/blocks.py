@@ -1,5 +1,5 @@
-""" Layout Blocks serializer
-"""
+"""Layout Blocks serializer"""
+
 import copy
 from zope.interface import implementer
 from zope.interface import Interface
@@ -17,8 +17,7 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
     """Blocks with layout serializer"""
 
     def has_blocks(self, layout, block):
-        """ Has blocks
-        """
+        """Has blocks"""
         if "blocks" not in layout:
             return False
         if "blocks" not in block:
@@ -30,11 +29,10 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
         return True
 
     def has_data_blocks(self, layout, block):
-        """ Has data with blocks
-        """
-        if 'data' not in layout:
+        """Has data with blocks"""
+        if "data" not in layout:
             return False
-        if 'data' not in block:
+        if "data" not in block:
             return False
         if not isinstance(layout["data"], dict):
             return False
@@ -57,8 +55,7 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
             IFixedLayoutBlockSerializationSync,
             name=layout.get("@type", ""),
             default=queryMultiAdapter(
-                (self.context, self.request),
-                IFixedLayoutBlockSerializationSync
+                (self.context, self.request), IFixedLayoutBlockSerializationSync
             ),
         )
 
@@ -74,14 +71,12 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
             )
             # Sub-block has a fixed layout
             if (
-                layout.get("fixedLayout") and
-                "blocks_layout" in layout and
-                "blocks_layout" in block
+                layout.get("fixedLayout")
+                and "blocks_layout" in layout
+                and "blocks_layout" in block
             ):
                 value["blocks_layout"] = self.blocks_layout(
-                    layout["blocks_layout"],
-                    block["blocks_layout"],
-                    block["blocks"]
+                    layout["blocks_layout"], block["blocks_layout"], block["blocks"]
                 )
 
         if self.has_data_blocks(layout, block):
@@ -92,9 +87,9 @@ class FixedLayoutBlocksJSONFieldSerializer(BlocksJSONFieldSerializer):
             )
             # Sub-block has a fixed layout
             if (
-                layout.get("fixedLayout") and
-                "blocks_layout" in layout["data"] and
-                "blocks_layout" in block["data"]
+                layout.get("fixedLayout")
+                and "blocks_layout" in layout["data"]
+                and "blocks_layout" in block["data"]
             ):
                 value["data"]["blocks_layout"] = self.blocks_layout(
                     layout["data"]["blocks_layout"],
