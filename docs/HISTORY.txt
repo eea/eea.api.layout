@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.3-dev0 - (unreleased)
+---------------------------
+* Change: Replace Python linting to ruff
+  [mihaidobrescu1111 = refs #286821]
+
 3.2 - (2021-11-11)
 ---------------------------
 * Change: Fixed package classifiers and python_requires
