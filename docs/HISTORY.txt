@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.3-dev0 - (unreleased)
+3.3 - (2025-11-18)
 ---------------------------
 * Change: Replace Python linting to ruff
   [mihaidobrescu1111 = refs #286821]
