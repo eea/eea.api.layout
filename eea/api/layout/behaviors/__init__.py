@@ -1,2 +1,1 @@
-""" Behaviors
-"""
+"""Behaviors"""
