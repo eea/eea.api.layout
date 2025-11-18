@@ -1,5 +1,5 @@
-""" Sync layout
-"""
+"""Sync layout"""
+
 from plone import api
 from zope.interface import implementer
 from zope.component import adapter
@@ -22,25 +22,19 @@ class DefaultFixedLayoutSync(object):
 
     @property
     def layout(self):
-        """ Layout fixed settings
-        """
+        """Layout fixed settings"""
         if self._layout is None:
             self._layout = api.portal.get_registry_record(
-                "layout",
-                interface=IFixedLayoutBlocksSettings,
-                default=[]
+                "layout", interface=IFixedLayoutBlocksSettings, default=[]
             )
         return self._layout
 
     @property
     def readOnlySettings(self):
-        """ Read-only settings
-        """
+        """Read-only settings"""
         if self._readOnlySettings is None:
             self._readOnlySettings = api.portal.get_registry_record(
-                "readOnlySettings",
-                interface=IFixedLayoutBlocksSettings,
-                default=[]
+                "readOnlySettings", interface=IFixedLayoutBlocksSettings, default=[]
             )
         return self._readOnlySettings
 

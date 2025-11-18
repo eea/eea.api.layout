@@ -1,11 +1,11 @@
-""" eea.api.layout Installer
-"""
+"""eea.api.layout Installer"""
+
 import os
 from os.path import join
 from setuptools import setup, find_packages
 
-NAME = 'eea.api.layout'
-PATH = NAME.split('.') + ['version.txt']
+NAME = "eea.api.layout"
+PATH = NAME.split(".") + ["version.txt"]
 VERSION = open(join(*PATH)).read().strip()
 
 setup(
@@ -14,8 +14,9 @@ setup(
     description="RestAPI @layout endpoint",
     long_description_content_type="text/x-rst",
     long_description=(
-        open("README.rst").read() + "\n" +
-        open(os.path.join("docs", "HISTORY.txt")).read()
+        open("README.rst").read()
+        + "\n"
+        + open(os.path.join("docs", "HISTORY.txt")).read()
     ),
     classifiers=[
         "Environment :: Web Environment",
@@ -32,26 +33,26 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     ],
-    keywords='EEA Add-ons Plone Zope',
-    author='European Environment Agency: IDM2 A-Team',
-    author_email='eea-edw-a-team-alerts@googlegroups.com',
-    url='https://github.com/eea/eea.api.layout',
-    license='GPL version 2',
-    packages=find_packages(exclude=['ez_setup']),
-    namespace_packages=['eea', 'eea.api'],
+    keywords="EEA Add-ons Plone Zope",
+    author="European Environment Agency: IDM2 A-Team",
+    author_email="eea-edw-a-team-alerts@googlegroups.com",
+    url="https://github.com/eea/eea.api.layout",
+    license="GPL version 2",
+    packages=find_packages(exclude=["ez_setup"]),
+    namespace_packages=["eea", "eea.api"],
     include_package_data=True,
     zip_safe=False,
-        install_requires=[
-        'setuptools',
+    install_requires=[
+        "setuptools",
         # -*- Extra requirements: -*-
     ],
     extras_require={
-        'test': [
-            'plone.app.testing',
+        "test": [
+            "plone.app.testing",
         ],
     },
     entry_points="""
     [z3c.autoinclude.plugin]
     target = plone
-    """
+    """,
 )
