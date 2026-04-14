@@ -1,6 +1,9 @@
 Changelog
 =========
 
+3.5-dev0 - (unreleased)
+---------------------------
+
 3.4 - (2026-04-14)
 ---------------------------
 * Change: Add unit tests for serializer blocks logic
