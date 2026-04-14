@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.4 - (2026-04-14)
+---------------------------
+* Change: Add unit tests for serializer blocks logic
+  [avoinea]
+
 3.3 - (2025-11-18)
 ---------------------------
 * Change: Replace Python linting to ruff
